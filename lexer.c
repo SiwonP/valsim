@@ -4,72 +4,53 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <regex.h>
 #include "lexer.h"
 
-int lex(char *str) {
+int main(void) {
     int state = 0;
     char c;
-    token res;
-    
-    int pos = 0;
-    c = str[pos];
-    int b;
 
-    while(str[pos] != NULL ) {
+    regex_t alpha;
+    regex_t num;
+    regex_t alphaNum;
+    regex_t sym;
+    regex_t spaces;
+
+    regcomp(&alpha, "[:alpha:]", REG_EXTENDED);
+    regcomp(&num, "[:digit:]", REG_EXTENDED);
+    regcomp(&alphaNum, "[:alnum:]", REG_EXTENDED);
+    regcomp(&spaces, "[:space:]", REG_EXTENDED);
+
+    while(1) {
         switch(state) {
             case 0:
-                switch(type_of(c)) {
-                    pos++;
-                    c = str[pos];
-                    case 0: state = 2; break;
-                    case 1: state = 1; break;
-                    default: printf("error");
-                }
-                break;
-            case 1:
-                if (type_of(c) == 1) {
+                if ( c >= '0' && c <= '9' ) {
+                    state = 3;
+                } else if ( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ) {
                     state = 1;
                 }
-                pos++;
-                c = str[pos];
+                //Initial step of recognition
+                break;
+            case 1:
+                //recognition of identifiers that may either variables or reserved words
+                if ( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+                    state = 1;
+                }
                 break;
             case 2:
-                if (type_of(c) == 0 || type_of(c) == 1) {
-                    state = 2;
-                }
-                pos ++;
-                c = str[pos];
+                //recognition of spaces such as ' ' \n \t
                 break;
-            default: 
-                printf("error2");
-        }
-
-        printf("%d", state);
-    }
-
-    return 1;
-}
-
-int type_of(char c) {
-    char *b;
-    b = strchr(ALPHA, c);
-    if ( b != NULL ) {
-        return 0;
-    } else {
-        b = strchr(NUM, c);
-        if ( b != NULL ) {
-            return 1;
-        } else {
-            return 2;
+            case 3:
+                //recognition of integers
+                if ( c >= '0' && c <= '9' ) {
+                    state = 3;
+                }
+                break;
+            default:
+               printf("WTF");
         }
     }
-}
-
-int main(void) {
-
-    int res;
-    char *test = "print";
-    res = lex(test);
 
     return 1;
 }
