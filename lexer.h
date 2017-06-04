@@ -1,9 +1,4 @@
-#define ALPHA "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-#define NUM "0123456789"
-
-int type_of(char);
-
-int lex(char*);
+int lex(FILE*);
 
 typedef struct {
     char *content;
