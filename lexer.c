@@ -10,10 +10,11 @@
 int lex(FILE *file) {
     char tok[32] = {0};
     int pos = 0;
+    int pos2 = 0;
     int state = 0;
     char c = fgetc(file);
 
-    //token 
+    token toks[128] = {0};
 
     while(c != EOF) {
         switch(state) {
@@ -29,6 +30,12 @@ int lex(FILE *file) {
                     state = 4;
                 } else if (c == '=') {
                     state = 5;
+                } else if (c == '(') {
+                    state = 6;
+                } else if (c == ')') {
+                    state = 7;
+                } else if (c == ' ' || c == '\n') {
+                    state = 8;
                 }
                 tok[pos] = c;
                 pos++;
@@ -44,6 +51,7 @@ int lex(FILE *file) {
                 } else {
                     printf("identifier : ");
                     tok[pos] = '\0';
+                    pos2 = save_token(tok, "id", pos2, toks);
                     pos = 0;
                     printf("%s\n", tok);
                     state = 0;
@@ -59,6 +67,7 @@ int lex(FILE *file) {
                 } else {
                     printf("integer : ");
                     tok[pos] = '\0';
+                    pos2 = save_token(tok, "int", pos2, toks);
                     pos = 0;
                     printf("%s\n", tok);
                     state = 0;
@@ -66,40 +75,71 @@ int lex(FILE *file) {
                 break;
             case 3:
                 //recognition of + operator
-                printf("+ op : ");
+                printf("op : ");
                 state = 0;
                 tok[pos]='\0';
                 printf("%s\n", tok);
                 pos = 0;
+                pos2 = save_token(tok, "op", pos2, toks);
                 break;
             case 4:
                 //recognition of - operator
-                printf("- op : ");
+                printf("op : ");
                 tok[pos] = '\0';
                 pos = 0;
                 printf("%s\n", tok);
                 state = 0;
-                //c = fgetc(file);
+                pos2 = save_token(tok, "op", pos2, toks);
                 break;
             case 5:
                 //recognition of = operator
-                printf("= op : ");
+                printf("op : ");
                 tok[pos] = '\0';
                 pos = 0;
                 printf("%s\n", tok);
                 state = 0;
-                //c = fgetc(file);
+                pos2 = save_token(tok, "op", pos2, toks);
+                break;
+            case 6:
+                //recognition of ( 
+                printf("sep : ");
+                tok[pos] = '\0';
+                pos = 0;
+                printf("%s\n", tok);
+                state = 0;
+                pos2 = save_token(tok, "sep", pos2, toks);
+                break;
+            case 7:
+                //recognition of )
+                printf("sep : ");
+                tok[pos] = '\0';
+                pos = 0;
+                printf("%s\n", tok);
+                state = 0;
+                pos2 = save_token(tok, "sep", pos2, toks);
+                break;
+            case 8:
+                pos = 0;
+                state = 0;
                 break;
             default:
-               printf("WTF");
+               printf("WTF\n");
+               printf("state : %d\n", state);
+               printf("char : %c\n", c);
         }
         //printf("%c\n",c);
     }
     
+    for (int i = 0; i < 32; i++) {
+        printf("%s", toks[i].content);
+    }
     return 1;
 }
 
-int save_token(void) {
+int save_token(char *tok, char *type, int pos, token *toks) {
+    strcpy(toks[pos].content, tok);
+    strcpy(toks[pos].type, type);
 
-    return 1;
+    //printf("%d\n", pos);
+    return pos + 1;
 }

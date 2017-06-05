@@ -1,6 +1,8 @@
 int lex(FILE*);
 
 typedef struct {
-    char *content;
-    char *type;
+    char content[32];
+    char type[16];
 } token;
+
+int save_token(char*, char*, int, token*);
