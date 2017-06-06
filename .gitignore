@@ -1,3 +1,5 @@
 lexer
 valsim
 *.swp
+*.valsim
+
