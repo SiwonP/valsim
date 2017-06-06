@@ -131,6 +131,9 @@ int lex(FILE *file) {
                 //recognition of float
                 if ( c >= '0' && c <= '9') {
                     state = 9;
+                    tok[pos] = c;
+                    pos++;
+                    c = fgetc(file);
                 } else {
                     printf("float : ");
                     tok[pos] = '\0';
