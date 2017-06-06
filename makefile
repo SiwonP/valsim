@@ -1,2 +1,2 @@
-build: main.c tokenizer.c
-	gcc main.c tokenizer.c -o valsim
+build: main.c lexer.c
+	gcc main.c lexer.c -o valsim

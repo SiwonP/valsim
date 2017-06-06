@@ -64,6 +64,11 @@ int lex(FILE *file) {
                     tok[pos] = c;
                     pos++;
                     c = fgetc(file);
+                } else if ( c == '.') {
+                    state = 9;
+                    tok[pos] = c;
+                    pos++;
+                    c = fgetc(file);
                 } else {
                     printf("integer : ");
                     tok[pos] = '\0';
@@ -122,6 +127,19 @@ int lex(FILE *file) {
                 pos = 0;
                 state = 0;
                 break;
+            case 9:
+                //recognition of float
+                if ( c >= '0' && c <= '9') {
+                    state = 9;
+                } else {
+                    printf("float : ");
+                    tok[pos] = '\0';
+                    pos = 0;
+                    printf("%s\n", tok);
+                    state = 0;
+                    pos2 = save_token(tok, "float", pos2, toks);
+                }
+                break;
             default:
                printf("WTF\n");
                printf("state : %d\n", state);
@@ -130,8 +148,9 @@ int lex(FILE *file) {
         //printf("%c\n",c);
     }
     
-    for (int i = 0; i < 32; i++) {
-        printf("%s", toks[i].content);
+    int i = 0;
+    for (i = 0; i < pos2; i++) {
+        printf("[%s : %s]\n", toks[i].content, toks[i].type);
     }
     return 1;
 }
