@@ -11,4 +11,8 @@ struct List {
     Element *premier;
 };
 
+List *initialisation(void*);
 
+void insert_at_the_end(List*, void*);
+
+void display_list(List*, void(*f)(void*));
