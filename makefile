@@ -1,2 +1,2 @@
-build: main.c lexer.c
-	gcc main.c lexer.c -o valsim
+build: src/main.c src/lexer.c src/list.c
+	gcc src/main.c src/lexer.c src/list.c -o valsim
