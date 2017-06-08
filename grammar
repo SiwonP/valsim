@@ -1,2 +1,49 @@
 Grammar of the valsim language
+Its grammar is influenced by C's grammar
 It shall be a LR grammar as most of the today's languages
+
+## Valsim Expression rules
+
+
+
+## Valsim Declaration rules
+
+declaration : 
+    | 
+
+## Valsim Statement rules
+
+statement : 
+    | selection-statement
+    | iteration-statement
+    | statement-list
+    | jump-statement
+
+selection-statement :
+    | if ( expression ) statement
+    | if ( expression ) statement else statement
+    | switch ( expression ) statement
+
+iteration-statement : 
+    | for ( ; ; ) statement
+    | for ( expression ; ; ) statement
+    | for ( ; expression ; ) statement
+    | for ( ; ; expression ) statement
+    | for ( expression ; expression ; ) statement
+    | for ( expression ; ; expression ) statement
+    | for ( ; expression ; expression ) statement
+    | for ( expression ; expression ; expression ) statement
+    | while ( expression ) statement
+    | do statement while ( expression )
+
+statement-list :
+    | statement
+    | statement-list statement
+
+
+break-statement : 
+    | break ;
+   
+return-statement : 
+    | return statement;
+    | return ;   
