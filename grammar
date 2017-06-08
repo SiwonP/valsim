@@ -2,14 +2,38 @@ Grammar of the valsim language
 Its grammar is influenced by C's grammar
 It shall be a LR grammar as most of the today's languages
 
+## Token description
+
+letter :
+    | a
+    | ..
+    | z
+
+digit :
+    | 0
+    | 1
+    | ..
+    | 9
+
+var : letter (letter|digit)*
+
+
 ## Valsim Expression rules
 
 
 
 ## Valsim Declaration rules
 
+declaration-list : 
+    | declaration
+    | declaration-list declaration 
+
 declaration : 
-    | 
+    | function-declaration
+    | var-declaration
+
+function-declaration :
+    | fct ( var-declaration ) : type statement
 
 ## Valsim Statement rules
 
@@ -25,13 +49,6 @@ selection-statement :
     | switch ( expression ) statement
 
 iteration-statement : 
-    | for ( ; ; ) statement
-    | for ( expression ; ; ) statement
-    | for ( ; expression ; ) statement
-    | for ( ; ; expression ) statement
-    | for ( expression ; expression ; ) statement
-    | for ( expression ; ; expression ) statement
-    | for ( ; expression ; expression ) statement
     | for ( expression ; expression ; expression ) statement
     | while ( expression ) statement
     | do statement while ( expression )
