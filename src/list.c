@@ -23,6 +23,7 @@ List *initialisation(void *any) {
 void insert_at_the_end(List *liste, void *any) {
     Element *newEl = malloc(sizeof(*newEl));
     newEl->el = any;
+    newEl->next = NULL;
 
     if ( liste == NULL ||newEl == NULL) {
         exit(EXIT_FAILURE);

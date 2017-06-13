@@ -147,7 +147,6 @@ int lex(FILE *file) {
                printf("state : %d\n", state);
                printf("char : %c\n", c);
         }
-        //printf("%c\n",c);
     }
     
     int i = 0;
