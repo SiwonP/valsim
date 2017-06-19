@@ -43,14 +43,14 @@ void insert_at_the_end(List *liste, void *any) {
 //able to display each element from a certain type 
 //otherwiser the display_list function doesn't know how to 
 //display the elements of its List argument
-void display_list(List *liste, void(*f)(void*)) {
+void display_list(List *liste) {
    if (liste == NULL) {
       exit(EXIT_FAILURE);
    }
 
   Element *current = liste->premier; 
   while ( current != NULL) {
-      (*f)(current);
+      printf("%s", current->el->content);
       current = current->next;
   }
 }

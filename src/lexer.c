@@ -6,14 +6,14 @@
 #include <string.h>
 #include "../h/lexer.h"
 
-int lex(FILE *file) {
+int lex(FILE *file, List *liste) {
     char tok[32] = {0};
     int pos = 0;
     int pos2 = 0;
     int state = 0;
     char c = fgetc(file);
 
-    token toks[128] = {0};
+    //token toks[128] = {0};
 
     while(c != EOF) {
         switch(state) {
@@ -50,7 +50,7 @@ int lex(FILE *file) {
                 } else {
                     printf("identifier : ");
                     tok[pos] = '\0';
-                    pos2 = save_token(tok, "id", pos2, toks);
+                    pos2 = save_token(tok, "id", pos2, liste);
                     pos = 0;
                     printf("%s\n", tok);
                     state = 0;
@@ -71,7 +71,7 @@ int lex(FILE *file) {
                 } else {
                     printf("integer : ");
                     tok[pos] = '\0';
-                    pos2 = save_token(tok, "int", pos2, toks);
+                    pos2 = save_token(tok, "int", pos2, liste);
                     pos = 0;
                     printf("%s\n", tok);
                     state = 0;
@@ -84,7 +84,7 @@ int lex(FILE *file) {
                 tok[pos]='\0';
                 printf("%s\n", tok);
                 pos = 0;
-                pos2 = save_token(tok, "op", pos2, toks);
+                pos2 = save_token(tok, "op", pos2, liste);
                 break;
             case 4:
                 //recognition of - operator
@@ -93,7 +93,7 @@ int lex(FILE *file) {
                 pos = 0;
                 printf("%s\n", tok);
                 state = 0;
-                pos2 = save_token(tok, "op", pos2, toks);
+                pos2 = save_token(tok, "op", pos2, liste);
                 break;
             case 5:
                 //recognition of = operator
@@ -102,7 +102,7 @@ int lex(FILE *file) {
                 pos = 0;
                 printf("%s\n", tok);
                 state = 0;
-                pos2 = save_token(tok, "op", pos2, toks);
+                pos2 = save_token(tok, "op", pos2, liste);
                 break;
             case 6:
                 //recognition of ( 
@@ -111,7 +111,7 @@ int lex(FILE *file) {
                 pos = 0;
                 printf("%s\n", tok);
                 state = 0;
-                pos2 = save_token(tok, "sep", pos2, toks);
+                pos2 = save_token(tok, "sep", pos2, liste);
                 break;
             case 7:
                 //recognition of )
@@ -120,7 +120,7 @@ int lex(FILE *file) {
                 pos = 0;
                 printf("%s\n", tok);
                 state = 0;
-                pos2 = save_token(tok, "sep", pos2, toks);
+                pos2 = save_token(tok, "sep", pos2, liste);
                 break;
             case 8:
                 pos = 0;
@@ -139,7 +139,7 @@ int lex(FILE *file) {
                     pos = 0;
                     printf("%s\n", tok);
                     state = 0;
-                    pos2 = save_token(tok, "float", pos2, toks);
+                    pos2 = save_token(tok, "float", pos2, liste);
                 }
                 break;
             default:
@@ -151,14 +151,19 @@ int lex(FILE *file) {
     
     int i = 0;
     for (i = 0; i < pos2; i++) {
-        printf("[%s : %s]\n", toks[i].content, toks[i].type);
+        //printf("[%s : %s]\n", toks[i].content, toks[i].type);
     }
     return 1;
 }
 
-int save_token(char *tok, char *type, int pos, token *toks) {
-    strcpy(toks[pos].content, tok);
-    strcpy(toks[pos].type, type);
+int save_token(char *tok, char *type, int pos, List *liste) {
+    //strcpy(toks[pos].content, tok);
+    //strcpy(toks[pos].type, type);
+    token *t = malloc(sizeof(*t));
+    t->content = tok;
+    t->type = type;
+
+    insert_at_the_end(liste, t);
 
     //printf("%d\n", pos);
     return pos + 1;
