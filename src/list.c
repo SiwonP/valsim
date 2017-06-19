@@ -1,9 +1,11 @@
+#include <stdio.h>
 #include <stdlib.h>
+//#include "../h/lexer.h"
 #include "../h/list.h"
 
 //Initialization of the list with a first element containing the any passed in argument of
 //the function
-List *initialisation(void *any) {
+List *initialisation(void) {
     List *liste = malloc(sizeof(*liste));
     Element *element = malloc(sizeof(*element));
 
@@ -11,7 +13,7 @@ List *initialisation(void *any) {
         exit(EXIT_FAILURE);
     }
 
-    element->el = any;
+    element->el = NULL;
     element->next = NULL;
     liste->premier = element;
 
@@ -20,7 +22,7 @@ List *initialisation(void *any) {
 
 //Insert at the end of the List liste an element
 //containing any also passed in argument of the function
-void insert_at_the_end(List *liste, void *any) {
+void insert_at_the_end(List *liste, token *any) {
     Element *newEl = malloc(sizeof(*newEl));
     newEl->el = any;
     newEl->next = NULL;
@@ -29,13 +31,13 @@ void insert_at_the_end(List *liste, void *any) {
         exit(EXIT_FAILURE);
     }
     
-    Element *test = liste->premier;
+    Element *current = liste->premier;
 
-    while(test->next != NULL) {
-        test = test->next;
+    while(current->next != NULL) {
+        current = current->next;
     }
 
-    test->next = newEl;
+    current->next = newEl;
 }
 
 //Display the Liste liste. Since elements of the Liste
