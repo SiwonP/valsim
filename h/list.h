@@ -1,7 +1,9 @@
+#include "token.h"
+
 typedef struct Element Element;
 
 struct Element{
-    void *el;
+    token *el;
     Element *next;
 };
 
@@ -11,8 +13,8 @@ struct List {
     Element *premier;
 };
 
-List *initialisation(void*);
+List *initialisation(void);
 
-void insert_at_the_end(List*, void*);
+void insert_at_the_end(List*, token*);
 
-void display_list(List*, void(*f)(void*));
+void display_list(List*);

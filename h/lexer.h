@@ -1,8 +1,5 @@
-int lex(FILE*);
+#include "list.h"
 
-typedef struct {
-    char content[32];
-    char type[16];
-} token;
+int lex(FILE*, List*);
 
-int save_token(char*, char*, int, token*);
+void save_token(char*, char*, List*);

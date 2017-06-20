@@ -6,14 +6,14 @@
 #include <string.h>
 #include "../h/lexer.h"
 
-int lex(FILE *file) {
+int lex(FILE *file, List *liste) {
     char tok[32] = {0};
     int pos = 0;
-    int pos2 = 0;
+    //int pos2 = 0;
     int state = 0;
     char c = fgetc(file);
 
-    token toks[128] = {0};
+    //token toks[128] = {0};
 
     while(c != EOF) {
         switch(state) {
@@ -48,11 +48,9 @@ int lex(FILE *file) {
                     pos++;
                     c = fgetc(file);
                 } else {
-                    printf("identifier : ");
                     tok[pos] = '\0';
-                    pos2 = save_token(tok, "id", pos2, toks);
+                    save_token(tok, "id", liste);
                     pos = 0;
-                    printf("%s\n", tok);
                     state = 0;
                 }
                 break;
@@ -69,58 +67,46 @@ int lex(FILE *file) {
                     pos++;
                     c = fgetc(file);
                 } else {
-                    printf("integer : ");
                     tok[pos] = '\0';
-                    pos2 = save_token(tok, "int", pos2, toks);
+                    save_token(tok, "int", liste);
                     pos = 0;
-                    printf("%s\n", tok);
                     state = 0;
                 }
                 break;
             case 3:
                 //recognition of + operator
-                printf("op : ");
                 state = 0;
                 tok[pos]='\0';
-                printf("%s\n", tok);
                 pos = 0;
-                pos2 = save_token(tok, "op", pos2, toks);
+                save_token(tok, "op", liste);
                 break;
             case 4:
                 //recognition of - operator
-                printf("op : ");
                 tok[pos] = '\0';
                 pos = 0;
-                printf("%s\n", tok);
                 state = 0;
-                pos2 = save_token(tok, "op", pos2, toks);
+                save_token(tok, "op", liste);
                 break;
             case 5:
                 //recognition of = operator
-                printf("op : ");
                 tok[pos] = '\0';
                 pos = 0;
-                printf("%s\n", tok);
                 state = 0;
-                pos2 = save_token(tok, "op", pos2, toks);
+                save_token(tok, "op", liste);
                 break;
             case 6:
                 //recognition of ( 
-                printf("sep : ");
                 tok[pos] = '\0';
                 pos = 0;
-                printf("%s\n", tok);
                 state = 0;
-                pos2 = save_token(tok, "sep", pos2, toks);
+                save_token(tok, "sep",  liste);
                 break;
             case 7:
                 //recognition of )
-                printf("sep : ");
                 tok[pos] = '\0';
                 pos = 0;
-                printf("%s\n", tok);
                 state = 0;
-                pos2 = save_token(tok, "sep", pos2, toks);
+                save_token(tok, "sep", liste);
                 break;
             case 8:
                 pos = 0;
@@ -134,12 +120,10 @@ int lex(FILE *file) {
                     pos++;
                     c = fgetc(file);
                 } else {
-                    printf("float : ");
                     tok[pos] = '\0';
                     pos = 0;
-                    printf("%s\n", tok);
                     state = 0;
-                    pos2 = save_token(tok, "float", pos2, toks);
+                    save_token(tok, "float", liste);
                 }
                 break;
             default:
@@ -149,17 +133,17 @@ int lex(FILE *file) {
         }
     }
     
-    int i = 0;
-    for (i = 0; i < pos2; i++) {
-        printf("[%s : %s]\n", toks[i].content, toks[i].type);
-    }
     return 1;
 }
 
-int save_token(char *tok, char *type, int pos, token *toks) {
-    strcpy(toks[pos].content, tok);
-    strcpy(toks[pos].type, type);
+void save_token(char *tok, char *type, List *liste) {
+    token *t = (token*)malloc(sizeof(*t));
+    char *copyTok = malloc(sizeof(*tok));
+    char *copyType = malloc(sizeof(*type));
+    strcpy(copyTok, tok);
+    strcpy(copyType, type);
+    t->content = copyTok;
+    t->type = copyType;
 
-    //printf("%d\n", pos);
-    return pos + 1;
+    insert_at_the_end(liste, t);
 }

@@ -2,4 +2,4 @@
 
 sum -> sum + term | sum - term | term
 term -> term * factor | term / factor | factor
-factor -> ( sum ) | int
+factor -> ( sum ) | int 
