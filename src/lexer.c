@@ -48,11 +48,9 @@ int lex(FILE *file, List *liste) {
                     pos++;
                     c = fgetc(file);
                 } else {
-                    printf("identifier : ");
                     tok[pos] = '\0';
                     pos2 = save_token(tok, "id", pos2, liste);
                     pos = 0;
-                    printf("%s\n", tok);
                     state = 0;
                 }
                 break;
@@ -69,56 +67,44 @@ int lex(FILE *file, List *liste) {
                     pos++;
                     c = fgetc(file);
                 } else {
-                    printf("integer : ");
                     tok[pos] = '\0';
                     pos2 = save_token(tok, "int", pos2, liste);
                     pos = 0;
-                    printf("%s\n", tok);
                     state = 0;
                 }
                 break;
             case 3:
                 //recognition of + operator
-                printf("op : ");
                 state = 0;
                 tok[pos]='\0';
-                printf("%s\n", tok);
                 pos = 0;
                 pos2 = save_token(tok, "op", pos2, liste);
                 break;
             case 4:
                 //recognition of - operator
-                printf("op : ");
                 tok[pos] = '\0';
                 pos = 0;
-                printf("%s\n", tok);
                 state = 0;
                 pos2 = save_token(tok, "op", pos2, liste);
                 break;
             case 5:
                 //recognition of = operator
-                printf("op : ");
                 tok[pos] = '\0';
                 pos = 0;
-                printf("%s\n", tok);
                 state = 0;
                 pos2 = save_token(tok, "op", pos2, liste);
                 break;
             case 6:
                 //recognition of ( 
-                printf("sep : ");
                 tok[pos] = '\0';
                 pos = 0;
-                printf("%s\n", tok);
                 state = 0;
                 pos2 = save_token(tok, "sep", pos2, liste);
                 break;
             case 7:
                 //recognition of )
-                printf("sep : ");
                 tok[pos] = '\0';
                 pos = 0;
-                printf("%s\n", tok);
                 state = 0;
                 pos2 = save_token(tok, "sep", pos2, liste);
                 break;
@@ -134,10 +120,8 @@ int lex(FILE *file, List *liste) {
                     pos++;
                     c = fgetc(file);
                 } else {
-                    printf("float : ");
                     tok[pos] = '\0';
                     pos = 0;
-                    printf("%s\n", tok);
                     state = 0;
                     pos2 = save_token(tok, "float", pos2, liste);
                 }
@@ -149,22 +133,15 @@ int lex(FILE *file, List *liste) {
         }
     }
     
-    int i = 0;
-    for (i = 0; i < pos2; i++) {
-        //printf("[%s : %s]\n", toks[i].content, toks[i].type);
-    }
     return 1;
 }
 
 int save_token(char *tok, char *type, int pos, List *liste) {
-    //strcpy(toks[pos].content, tok);
-    //strcpy(toks[pos].type, type);
     token *t = malloc(sizeof(*t));
     t->content = tok;
     t->type = type;
 
     insert_at_the_end(liste, t);
 
-    //printf("%d\n", pos);
     return pos + 1;
 }

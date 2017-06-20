@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
     if (file != NULL) {
         lex(file, liste);
     }
+    display_list(liste);
     return 0;
 }
    

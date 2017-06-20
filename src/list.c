@@ -3,8 +3,6 @@
 //#include "../h/lexer.h"
 #include "../h/list.h"
 
-//Initialization of the list with a first element containing the any passed in argument of
-//the function
 List *initialisation(void) {
     List *liste = malloc(sizeof(*liste));
     Element *element = malloc(sizeof(*element));
@@ -12,8 +10,10 @@ List *initialisation(void) {
     if ( liste == NULL ||element == NULL ) {
         exit(EXIT_FAILURE);
     }
+    token *prems = malloc(sizeof(*prems));
+    prems->content = "begin";
 
-    element->el = NULL;
+    element->el = prems;
     element->next = NULL;
     liste->premier = element;
 
@@ -26,6 +26,7 @@ void insert_at_the_end(List *liste, token *any) {
     Element *newEl = malloc(sizeof(*newEl));
     newEl->el = any;
     newEl->next = NULL;
+    printf("%s\n", newEl->el->content);
 
     if ( liste == NULL ||newEl == NULL) {
         exit(EXIT_FAILURE);
@@ -40,19 +41,16 @@ void insert_at_the_end(List *liste, token *any) {
     current->next = newEl;
 }
 
-//Display the Liste liste. Since elements of the Liste
-//are void* types, you should give a function 
-//able to display each element from a certain type 
-//otherwiser the display_list function doesn't know how to 
-//display the elements of its List argument
+//Display the Liste liste. 
 void display_list(List *liste) {
    if (liste == NULL) {
       exit(EXIT_FAILURE);
    }
 
   Element *current = liste->premier; 
+  printf("%s\n", current->next->el->content);
   while ( current != NULL) {
-      printf("%s", current->el->content);
+      //printf("%s\t", current->el->content);
       current = current->next;
   }
 }
