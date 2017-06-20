@@ -2,4 +2,4 @@
 
 int lex(FILE*, List*);
 
-int save_token(char*, char*, int, List*);
+void save_token(char*, char*, List*);
