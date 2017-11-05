@@ -1,3 +1,6 @@
+#ifndef LIST_H
+#define LIST_H
+
 #include "token.h"
 
 typedef struct Element Element;
@@ -18,3 +21,5 @@ List *initialisation(void);
 void insert_at_the_end(List*, token*);
 
 void display_list(List*);
+
+#endif

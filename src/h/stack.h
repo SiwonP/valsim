@@ -1,3 +1,6 @@
+#ifndef STACK_H
+#define STACK_H
+
 typedef struct Stack Stack;
 
 struct Stack {
@@ -5,3 +8,5 @@ struct Stack {
     Stack *next;
     Stack *prev;
 };
+
+#endif
