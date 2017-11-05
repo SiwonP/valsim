@@ -3,4 +3,4 @@ valsim
 *.swp
 test.valsim
 build
-
+.DS_Store
