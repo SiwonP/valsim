@@ -1,3 +1,3 @@
-#include "../h/tree.h"
+#include "./h/tree.h"
 
 

@@ -2,4 +2,5 @@ lexer
 valsim
 *.swp
 test.valsim
+build
 

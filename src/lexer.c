@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../h/lexer.h"
+#include "./h/lexer.h"
 
 int lex(FILE *file, List *liste) {
     char tok[32] = {0};

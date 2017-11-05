@@ -1,2 +1,2 @@
-#include "../h/stack.h"
+#include "./h/stack.h"
 
